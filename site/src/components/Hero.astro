@@ -159,6 +159,12 @@
 		border-radius: 50%;
 		background: var(--red);
 		box-shadow: 0 0 0 4px var(--red-tint);
+		animation: breathe 2.8s ease-in-out infinite;
+	}
+
+	@keyframes breathe {
+		0%, 100% { box-shadow: 0 0 0 3px var(--red-tint); opacity: 1; }
+		50% { box-shadow: 0 0 0 6px var(--red-tint); opacity: 0.75; }
 	}
 
 	/* Finding card: a page torn from the audit report — the anchor */
@@ -305,6 +311,7 @@
 		.hero__panel,
 		.hero__stamp { opacity: 1; animation: none; }
 		.redline > svg path { stroke-dashoffset: 0; animation: none; }
+		.eyebrow__tick { animation: none; }
 	}
 
 	@media (max-width: 860px) {

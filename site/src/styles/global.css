@@ -1,5 +1,7 @@
-/* Self-hosted variable fonts (bundled, no external CDN) */
-@import '@fontsource-variable/fraunces';
+/* Self-hosted variable fonts (bundled, no external CDN).
+   Fraunces must come from opsz.css: the default build carries only the
+   wght axis, which silently disables every 'opsz' tuning below. */
+@import '@fontsource-variable/fraunces/opsz.css';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/jetbrains-mono';
 
@@ -48,6 +50,11 @@
 html {
 	-webkit-text-size-adjust: 100%;
 	scroll-behavior: smooth;
+}
+
+/* Anchored sections stop clear of the 64px sticky nav */
+section[id] {
+	scroll-margin-top: 76px;
 }
 
 body {
@@ -242,5 +249,54 @@ svg {
 	}
 	html {
 		scroll-behavior: auto;
+	}
+}
+
+/* ── Print: the page is an audit report — let it print like one ── */
+@media print {
+	.reveal {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+	}
+
+	body {
+		background: #fff;
+	}
+
+	/* Chrome-only surfaces have no place on paper */
+	.nav,
+	.cta,
+	.hero__cta,
+	.foot__cols,
+	.foot__bottom {
+		display: none !important;
+	}
+
+	section {
+		padding-top: 40px !important;
+		padding-bottom: 40px !important;
+	}
+
+	.finding,
+	.chain,
+	.tile,
+	.stat,
+	.quote,
+	.step,
+	.clause,
+	.cli {
+		break-inside: avoid;
+		box-shadow: none !important;
+	}
+
+	/* Keep the red pen on paper */
+	.eyebrow,
+	.stamp,
+	.redline > svg path,
+	.sev,
+	.chain__badge {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
 	}
 }

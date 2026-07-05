@@ -20,8 +20,8 @@ const logos = ['Meridian Pay', 'Kestrel', 'Datavine', 'Northbeam', 'Arclight', '
 			{
 				stats.map((s) => (
 					<div class="stat">
-						<dd class="stat__value">{s.value}</dd>
 						<dt class="stat__label">{s.label}</dt>
+						<dd class="stat__value" data-value={s.value}>{s.value}</dd>
 					</div>
 				))
 			}
@@ -43,6 +43,47 @@ const logos = ['Meridian Pay', 'Kestrel', 'Datavine', 'Northbeam', 'Arclight', '
 		</ul>
 	</div>
 </section>
+
+<script>
+	// Count the ledger totals up once the stats row fades in, piggybacking
+	// on the reveal system's .is-in class. Skipped under reduced motion.
+	const stats = document.querySelector('.stats');
+	if (stats && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+		const run = () => {
+			for (const el of stats.querySelectorAll('.stat__value')) {
+				const raw = el.dataset.value ?? '';
+				const m = raw.match(/^([\d,.]+)(.*)$/);
+				if (!m) continue;
+				const target = parseFloat(m[1].replaceAll(',', ''));
+				const decimals = (m[1].split('.')[1] || '').length;
+				const suffix = m[2];
+				const t0 = performance.now();
+				const dur = 900;
+				const tick = (t) => {
+					const p = Math.min((t - t0) / dur, 1);
+					const eased = 1 - Math.pow(1 - p, 3);
+					el.textContent =
+						(target * eased).toLocaleString('en-US', {
+							minimumFractionDigits: decimals,
+							maximumFractionDigits: decimals,
+						}) + suffix;
+					if (p < 1) requestAnimationFrame(tick);
+				};
+				requestAnimationFrame(tick);
+			}
+		};
+		if (stats.classList.contains('is-in')) run();
+		else {
+			const mo = new MutationObserver(() => {
+				if (stats.classList.contains('is-in')) {
+					mo.disconnect();
+					run();
+				}
+			});
+			mo.observe(stats, { attributes: true, attributeFilter: ['class'] });
+		}
+	}
+</script>
 
 <style>
 	.rec {
@@ -72,6 +113,10 @@ const logos = ['Meridian Pay', 'Kestrel', 'Datavine', 'Northbeam', 'Arclight', '
 		border: 1px solid var(--line);
 		border-radius: var(--r);
 		background: var(--card);
+		/* Valid dl order is label→value; the figure still reads first */
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 10px;
 	}
 
 	.stat__value {
@@ -79,13 +124,13 @@ const logos = ['Meridian Pay', 'Kestrel', 'Datavine', 'Northbeam', 'Arclight', '
 		font-family: var(--font-display);
 		font-weight: 560;
 		font-variation-settings: 'opsz' 60, 'SOFT' 0, 'WONK' 0;
+		font-variant-numeric: tabular-nums;
 		font-size: clamp(30px, 3vw, 40px);
 		line-height: 1;
 		color: var(--ink);
 	}
 
 	.stat__label {
-		margin-top: 10px;
 		font-family: var(--font-mono);
 		font-size: 11px;
 		letter-spacing: 0.08em;
