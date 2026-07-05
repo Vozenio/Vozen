@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Vozen — AI security audits for your codebase',
+	description = 'Vozen’s AI agents audit every commit the way a security engineer would: verified vulnerabilities, leaked secrets, supply-chain risk, and fix PRs with evidence. Read-only access, zero code retention, SOC 2.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta name="theme-color" content="#fdfdfb" />
+		<!-- Enable scroll-reveal only when JS is available; without it, content stays visible -->
+		<script is:inline>document.documentElement.classList.add('js');</script>
+	</head>
+	<body>
+		<slot />
+
+		<script>
+			// Scroll-reveal: fade elements up as they enter the viewport.
+			// A rAF-throttled scroll sweep (not IntersectionObserver) so no
+			// element can be skipped on fast or jumped scrolls and left blank.
+			const reveals = Array.from(document.querySelectorAll('.reveal'));
+			const show = (el) => el.classList.add('is-in');
+			let ticking = false;
+			const sweep = () => {
+				ticking = false;
+				const edge = window.innerHeight * 0.92;
+				for (let i = reveals.length - 1; i >= 0; i--) {
+					if (reveals[i].getBoundingClientRect().top < edge) {
+						show(reveals[i]);
+						reveals.splice(i, 1);
+					}
+				}
+			};
+			const onScroll = () => {
+				if (!ticking) {
+					ticking = true;
+					requestAnimationFrame(sweep);
+				}
+			};
+			window.addEventListener('scroll', onScroll, { passive: true });
+			window.addEventListener('resize', onScroll, { passive: true });
+			window.addEventListener('load', sweep);
+			sweep();
+		</script>
+	</body>
+</html>

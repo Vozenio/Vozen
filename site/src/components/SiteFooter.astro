@@ -1,0 +1,150 @@
+---
+const cols = [
+	{
+		head: 'Product',
+		links: ['Code audit', 'Secrets detection', 'Supply chain', 'Fix PRs & reports'],
+	},
+	{
+		head: 'Developers',
+		links: ['Docs', 'Sample report', 'CLI & CI', 'Status'],
+	},
+	{
+		head: 'Company',
+		links: ['About', 'Blog', 'Careers', 'Contact'],
+	},
+];
+---
+
+<footer class="foot">
+	<div class="wrap foot__grid">
+		<div class="foot__brand">
+			<a href="/" class="brand" aria-label="Vozen home">
+				<span class="brand__dot"></span>
+				<span class="brand__word">vozen</span>
+			</a>
+			<p class="foot__tag">AI security audits for your codebase, by default.</p>
+		</div>
+
+		<div class="foot__cols">
+			{
+				cols.map((c) => (
+					<div class="foot__col">
+						<h4 class="foot__head">{c.head}</h4>
+						<ul>
+							{c.links.map((l) => (
+								<li>
+									<a href="#">{l}</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="wrap foot__bottom">
+		<span>© 2026 Vozen. All rights reserved.</span>
+		<span class="foot__meta">vozen.io</span>
+	</div>
+</footer>
+
+<style>
+	.foot {
+		border-top: 1px solid var(--line);
+		padding-top: 56px;
+	}
+
+	.foot__grid {
+		display: grid;
+		grid-template-columns: 1.2fr 2fr;
+		gap: 48px;
+		padding-bottom: 48px;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 9px;
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-size: 21px;
+		letter-spacing: -0.01em;
+	}
+
+	.brand__dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 2px;
+		background: var(--red);
+		transform: rotate(45deg);
+	}
+
+	.foot__tag {
+		margin-top: 14px;
+		font-size: 14px;
+		color: var(--ink-soft);
+	}
+
+	.foot__cols {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+	}
+
+	.foot__head {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+		margin: 0 0 14px;
+	}
+
+	.foot__col ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 9px;
+	}
+
+	.foot__col a {
+		font-size: 14.5px;
+		color: var(--ink-soft);
+		transition: color 0.16s var(--ease);
+	}
+
+	/* Same hover language as the nav: ink text, red-pen underline */
+	.foot__col a:hover {
+		color: var(--ink);
+		text-decoration: underline;
+		text-decoration-color: var(--red);
+		text-decoration-thickness: 1.5px;
+		text-underline-offset: 4px;
+	}
+
+	.foot__bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 22px 0 30px;
+		border-top: 1px solid var(--line);
+		font-size: 13px;
+		color: var(--ink-faint);
+	}
+
+	.foot__meta {
+		font-family: var(--font-mono);
+	}
+
+	@media (max-width: 700px) {
+		.foot__grid { grid-template-columns: 1fr; gap: 36px; }
+	}
+
+	@media (max-width: 480px) {
+		.foot__cols { grid-template-columns: 1fr 1fr; }
+	}
+</style>

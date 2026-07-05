@@ -1,0 +1,322 @@
+---
+---
+
+<section class="hero">
+	<div class="wrap hero__grid">
+		<div class="hero__copy">
+			<span class="eyebrow hero__eyebrow">
+				<span class="eyebrow__tick"></span>AI security audits · Continuous
+			</span>
+
+			<h1 class="hero__title">
+				Your code,<br />
+				<span class="redline">audited<svg viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 2, 150 11, 297 5" vector-effect="non-scaling-stroke"></path></svg></span> by default.
+			</h1>
+
+			<p class="hero__lede">
+				Vozen’s AI agents read every change the way a principal security engineer
+				would: tracing data flows, verifying each finding against your real code,
+				and opening fix PRs with evidence. No stale scans, no false-positive noise.
+			</p>
+
+			<div class="hero__cta">
+				<a href="#start" class="btn btn--primary">Request an audit</a>
+				<a href="#coverage" class="btn btn--ghost">
+					Read a sample report
+					<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+					</svg>
+				</a>
+			</div>
+
+			<p class="hero__trust">
+				<span class="eyebrow eyebrow--muted">SOC 2 Type II · Read-only access · Zero code retention · OWASP&nbsp;&&nbsp;CWE</span>
+			</p>
+		</div>
+
+		<div class="hero__panel" aria-hidden="true">
+			<article class="finding">
+				<header class="finding__head">
+					<div class="finding__id">
+						<span class="finding__ref">Finding VZ-2026-042</span>
+						<span class="finding__meta">SQL injection · CWE-89 · src/api/users.ts</span>
+					</div>
+					<span class="sev">Critical</span>
+				</header>
+
+				<pre class="finding__code"><code><span class="ln">40</span>const q = db.raw(
+<span class="ln">41</span>  `SELECT * FROM users WHERE name = '<mark class="flag">${'{req.query.name}'}</mark>'`
+<span class="ln">42</span>);</code></pre>
+
+				<p class="finding__note">↳ unsanitized request input reaches raw SQL — verified on the live data flow</p>
+
+				<footer class="finding__fix">
+					<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+						<path d="M13 4L6 12 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+					</svg>
+					Fix PR <span class="finding__pr">#418</span> opened — parameterized query, tests passing
+				</footer>
+			</article>
+			<span class="stamp hero__stamp">Vozen AI audit · verified</span>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding: 88px 0 96px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Ruled-paper texture with a red margin rule, like a marked-up document */
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: linear-gradient(var(--line) 1px, transparent 1px);
+		background-size: 100% 44px;
+		-webkit-mask-image: radial-gradient(circle at 72% 18%, #000, transparent 66%);
+		mask-image: radial-gradient(circle at 72% 18%, #000, transparent 66%);
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+	.hero::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: max(24px, calc((100% - var(--maxw)) / 2 - 32px));
+		width: 1.5px;
+		background: var(--red-line);
+		opacity: 0.7;
+		pointer-events: none;
+	}
+
+	.hero__grid {
+		position: relative;
+		display: grid;
+		/* minmax(0,…) lets the code panel scroll internally instead of
+		   forcing its min-content width onto the track (mobile overflow fix) */
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+		gap: 56px;
+		align-items: center;
+	}
+
+	.hero__copy,
+	.hero__panel {
+		min-width: 0;
+	}
+
+	.hero__copy > * {
+		opacity: 0;
+		animation: rise 0.7s var(--ease) forwards;
+	}
+	.hero__eyebrow { animation-delay: 0.02s; }
+	.hero__title { animation-delay: 0.1s; }
+	.hero__lede { animation-delay: 0.2s; }
+	.hero__cta { animation-delay: 0.3s; }
+	.hero__trust { animation-delay: 0.4s; }
+
+	.hero__title {
+		font-size: clamp(38px, 5.2vw, 60px);
+		margin: 22px 0 0;
+		/* Display-size Fraunces: push the optical axis up for sharper
+		   stroke contrast, and tighten tracking to match */
+		font-variation-settings: 'opsz' 96, 'SOFT' 0, 'WONK' 0;
+		letter-spacing: -0.016em;
+	}
+
+	/* The red pen stroke draws itself in under the key word */
+	.redline > svg path {
+		stroke-dasharray: 320;
+		stroke-dashoffset: 320;
+		animation: draw 0.7s var(--ease) 0.7s forwards;
+	}
+
+	.hero__lede {
+		max-width: 30rem;
+		margin-top: 22px;
+		font-size: 18px;
+		color: var(--ink-soft);
+	}
+
+	.hero__cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 32px;
+	}
+
+	.hero__trust {
+		margin-top: 28px;
+	}
+
+	.eyebrow__tick {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: var(--red);
+		box-shadow: 0 0 0 4px var(--red-tint);
+	}
+
+	/* Finding card: a page torn from the audit report — the anchor */
+	.hero__panel {
+		position: relative;
+		opacity: 0;
+		animation: rise 0.8s var(--ease) 0.25s forwards;
+	}
+
+	.finding {
+		position: relative;
+		z-index: 1;
+		background: var(--card);
+		border: 1px solid var(--line-strong);
+		border-radius: var(--r-lg);
+		box-shadow: 0 1px 2px rgba(28, 27, 22, 0.06), 0 22px 48px -30px rgba(28, 27, 22, 0.35);
+		overflow: hidden;
+	}
+
+	.finding__head {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 16px 18px 14px;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.finding__ref {
+		display: block;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink);
+	}
+
+	.finding__meta {
+		display: block;
+		margin-top: 4px;
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: var(--ink-faint);
+	}
+
+	.sev {
+		flex-shrink: 0;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--red);
+		background: var(--red-tint);
+		border: 1px solid var(--red-line);
+		border-radius: var(--r-sm);
+		padding: 4px 8px;
+	}
+
+	.finding__code {
+		margin: 0;
+		padding: 18px 18px 16px;
+		background: var(--paper-2);
+		font-family: var(--font-mono);
+		font-size: 13px;
+		line-height: 1.8;
+		color: var(--ink);
+		overflow-x: auto;
+		tab-size: 2;
+	}
+
+	.ln {
+		display: inline-block;
+		width: 2.2em;
+		color: var(--ink-faint);
+		user-select: none;
+	}
+
+	.flag {
+		background: var(--red-tint);
+		color: var(--red-deep);
+		border-radius: 2px;
+		padding: 1px 2px;
+		text-decoration: underline wavy var(--red);
+		text-decoration-thickness: 1.5px;
+		text-underline-offset: 4px;
+	}
+
+	.finding__note {
+		padding: 12px 18px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-style: italic;
+		color: var(--red-deep);
+		border-bottom: 1px solid var(--line);
+	}
+
+	.finding__fix {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 13px 18px;
+		font-size: 13.5px;
+		color: var(--ink-soft);
+	}
+
+	.finding__fix svg {
+		color: var(--ink);
+	}
+
+	.finding__pr {
+		font-family: var(--font-mono);
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	.hero__stamp {
+		position: absolute;
+		z-index: 2;
+		top: -16px;
+		right: -10px;
+		opacity: 0;
+		animation: stampIn 0.5s var(--ease) 1.05s forwards;
+	}
+
+	@keyframes rise {
+		from { opacity: 0; transform: translateY(18px); }
+		to { opacity: 1; transform: none; }
+	}
+
+	@keyframes draw {
+		to { stroke-dashoffset: 0; }
+	}
+
+	@keyframes stampIn {
+		from { opacity: 0; transform: rotate(-6deg) scale(1.7); }
+		70% { opacity: 1; transform: rotate(-6deg) scale(0.95); }
+		to { opacity: 1; transform: rotate(-6deg) scale(1); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero__copy > *,
+		.hero__panel,
+		.hero__stamp { opacity: 1; animation: none; }
+		.redline > svg path { stroke-dashoffset: 0; animation: none; }
+	}
+
+	@media (max-width: 860px) {
+		.hero { padding: 56px 0 68px; }
+		.hero::after { display: none; }
+		.hero__grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 44px;
+		}
+		.hero__panel { order: 2; }
+		.hero__stamp { right: 6px; top: -12px; }
+		/* Wrapped serif lines need air so the red stroke never reads as a strikethrough */
+		.hero__title { line-height: 1.14; }
+	}
+</style>

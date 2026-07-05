@@ -1,0 +1,162 @@
+---
+---
+
+<section class="cta" id="start">
+	<div class="wrap">
+		<div class="cta__panel reveal">
+			<span class="eyebrow cta__eyebrow">§ 03 · Get started</span>
+			<h2 class="cta__title">Your first audit report, this week.</h2>
+			<p class="cta__sub">
+				Connect a repo read-only and see verified findings within the hour. Walk
+				through the report with our security team.
+			</p>
+
+			<form class="cta__form" action="#" method="post">
+				<input
+					class="cta__input"
+					type="email"
+					name="email"
+					placeholder="you@company.com"
+					aria-label="Work email"
+					required
+				/>
+				<button class="btn cta__btn" type="submit">Request an audit</button>
+			</form>
+
+			<p class="cta__fine">SOC 2 Type II · Zero code retention · Enterprise SSO and dedicated support.</p>
+
+			<p class="cta__end" aria-hidden="true">End of report</p>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cta {
+		padding: 40px 0 100px;
+	}
+
+	/* The report's ink-black back cover */
+	.cta__panel {
+		position: relative;
+		overflow: hidden;
+		background: var(--ink);
+		color: var(--paper);
+		border-radius: var(--r-lg);
+		padding: 72px 48px;
+		text-align: center;
+	}
+
+	/* A whisper of red ink bleeding through from the report inside */
+	.cta__panel::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(52% 80% at 50% -18%, color-mix(in srgb, var(--red) 22%, transparent), transparent 62%);
+		pointer-events: none;
+	}
+
+	/* Certificate-style hairline frame: this is a cover, not a hero */
+	.cta__panel::after {
+		content: '';
+		position: absolute;
+		inset: 13px;
+		border: 1px solid color-mix(in srgb, var(--paper) 22%, transparent);
+		border-radius: calc(var(--r-lg) - 5px);
+		pointer-events: none;
+	}
+
+	.cta__eyebrow {
+		position: relative;
+		color: color-mix(in srgb, var(--red) 62%, #fff);
+	}
+
+	.cta__title {
+		position: relative;
+		font-size: clamp(28px, 4vw, 44px);
+		margin: 16px 0 0;
+	}
+
+	.cta__sub {
+		position: relative;
+		margin: 16px auto 0;
+		max-width: 27rem;
+		color: color-mix(in srgb, var(--paper) 70%, transparent);
+		font-size: 16px;
+	}
+
+	.cta__form {
+		position: relative;
+		display: flex;
+		gap: 10px;
+		max-width: 26rem;
+		margin: 30px auto 0;
+	}
+
+	.cta__input {
+		flex: 1;
+		min-width: 0;
+		font-family: var(--font-body);
+		font-size: 15px;
+		color: var(--paper);
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: var(--r-sm);
+		padding: 12px 14px;
+		transition: border-color 0.16s var(--ease), background 0.16s var(--ease);
+	}
+
+	.cta__input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+	.cta__input:focus {
+		outline: none;
+		border-color: var(--red);
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.cta__btn {
+		background: var(--paper);
+		color: var(--ink);
+		white-space: nowrap;
+	}
+
+	.cta__btn:hover {
+		background: var(--red);
+		color: #fff;
+	}
+
+	.cta__fine {
+		position: relative;
+		margin-top: 16px;
+		font-size: 13px;
+		color: color-mix(in srgb, var(--paper) 45%, transparent);
+	}
+
+	/* Closing mark, the way a sealed report signs off its last page */
+	.cta__end {
+		position: relative;
+		margin-top: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 14px;
+		font-family: var(--font-mono);
+		font-size: 10.5px;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--paper) 36%, transparent);
+	}
+
+	.cta__end::before,
+	.cta__end::after {
+		content: '';
+		width: 40px;
+		height: 1px;
+		background: color-mix(in srgb, var(--paper) 22%, transparent);
+	}
+
+	@media (max-width: 560px) {
+		.cta__panel { padding: 56px 28px; }
+		.cta__panel::after { inset: 11px; }
+		.cta__form { flex-direction: column; }
+	}
+</style>

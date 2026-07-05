@@ -1,0 +1,80 @@
+---
+const badges = [
+	'OWASP Top 10',
+	'CWE Top 25',
+	'Secrets & credentials',
+	'Supply chain / SBOM',
+	'IaC misconfigurations',
+	'Immutable audit trail',
+];
+---
+
+<section class="trust reveal">
+	<div class="wrap trust__inner">
+		<span class="trust__lead">Audit coverage from day one</span>
+		<ul class="trust__badges">
+			{badges.map((b) => <li>{b}</li>)}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.trust {
+		border-top: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+		background: var(--paper-2);
+	}
+
+	.trust__inner {
+		display: flex;
+		align-items: center;
+		gap: 32px;
+		padding: 22px var(--gutter);
+		flex-wrap: wrap;
+	}
+
+	.trust__lead {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+		white-space: nowrap;
+	}
+
+	.trust__badges {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px 22px;
+		align-items: center;
+	}
+
+	.trust__badges li {
+		position: relative;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--ink-soft);
+		padding-left: 20px;
+	}
+
+	.trust__badges li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 50%;
+		width: 12px;
+		height: 12px;
+		margin-top: -6px;
+		border-radius: 3px;
+		background: var(--red);
+		-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13 4L6 12 3 9' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M13 4L6 12 3 9' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+	}
+
+	@media (max-width: 720px) {
+		.trust__inner { gap: 16px; }
+	}
+</style>

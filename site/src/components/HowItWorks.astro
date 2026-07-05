@@ -1,0 +1,136 @@
+---
+const steps = [
+	{
+		n: '01',
+		title: 'Connect, read-only',
+		body: 'Grant read access to your repos. Code is never stored and never trains a model.',
+	},
+	{
+		n: '02',
+		title: 'Agents run the audit',
+		body: 'They map architecture and data flows, then verify every candidate finding before it reaches you.',
+	},
+	{
+		n: '03',
+		title: 'Merge fixes, seal the report',
+		body: 'Approve AI-authored fix PRs and hand customers an evidence-backed, sealed audit report.',
+	},
+];
+---
+
+<section class="how" id="method">
+	<div class="wrap how__grid">
+		<div class="how__copy">
+			<span class="eyebrow reveal">§ 02 · Method</span>
+			<h2 class="how__title reveal">From repo access to sealed report in three steps.</h2>
+
+			<ol class="steps">
+				{
+					steps.map((s, i) => (
+						<li class="step reveal" style={`transition-delay:${i * 80}ms`}>
+							<span class="step__n">{s.n}</span>
+							<div>
+								<h3 class="step__title">{s.title}</h3>
+								<p class="step__body">{s.body}</p>
+							</div>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+
+		<div class="how__panel reveal" aria-hidden="true">
+			<div class="cli">
+				<div class="cli__line"><span class="cli__p">$</span> vozen audit <span class="cli__pkg">acme/api</span></div>
+				<div class="cli__line cli__out">mapping data flows <span class="cli__dim">1,284 files · 96 routes</span></div>
+				<div class="cli__line cli__out">findings <span class="cli__crit">2 critical</span> · 5 high · 11 medium</div>
+				<div class="cli__line cli__out">verified 18/18 <span class="cli__dim">0 false positives shipped</span></div>
+				<div class="cli__line cli__out"><span class="cli__ok">✓</span> fix PRs opened <span class="cli__pkg">#418 #419</span></div>
+				<div class="cli__line cli__out"><span class="cli__ok">✓</span> report sealed <span class="cli__dim">sha256:9f2c…e41a</span></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.how {
+		padding: 96px 0;
+		border-top: 1px solid var(--line);
+		background: var(--paper-2);
+	}
+
+	.how__grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 64px;
+		align-items: center;
+	}
+
+	.how__title {
+		font-size: clamp(26px, 3.4vw, 36px);
+		margin: 16px 0 34px;
+		max-width: 22rem;
+	}
+
+	.steps {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.step {
+		display: flex;
+		gap: 18px;
+		padding: 20px 0;
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.step:last-child {
+		border-bottom: 1px solid var(--line-strong);
+	}
+
+	.step__n {
+		font-family: var(--font-mono);
+		font-size: 13px;
+		color: var(--red);
+		padding-top: 3px;
+	}
+
+	.step__title {
+		font-size: 18px;
+	}
+
+	.step__body {
+		margin-top: 5px;
+		font-size: 14.5px;
+		color: var(--ink-soft);
+	}
+
+	.cli {
+		background: var(--card);
+		border: 1px solid var(--line-strong);
+		border-radius: var(--r);
+		padding: 22px 24px;
+		font-family: var(--font-mono);
+		font-size: 13.5px;
+		line-height: 2;
+		box-shadow: 0 18px 44px -30px rgba(28, 27, 22, 0.35);
+	}
+
+	.cli__p { color: var(--red); margin-right: 8px; }
+	.cli__pkg { color: var(--ink); font-weight: 500; }
+	.cli__out { color: var(--ink-soft); }
+	.cli__dim { color: var(--ink-faint); }
+	.cli__crit { color: var(--red); font-weight: 600; }
+	.cli__ok { color: var(--ink); margin-right: 6px; }
+
+	@media (max-width: 860px) {
+		.how { padding: 68px 0; }
+		.how__grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 40px;
+		}
+	}
+</style>

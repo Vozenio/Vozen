@@ -1,0 +1,246 @@
+/* Self-hosted variable fonts (bundled, no external CDN) */
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* ── Design tokens: a formal audit document, marked up in red pen ── */
+:root {
+	/* Palette: paper white, ink type, a single audit-red pen */
+	--paper: #fdfdfb;
+	--paper-2: #f6f5f0;
+	--card: #ffffff;
+	--ink: #1c1b16;
+	--ink-soft: #6b6a60;
+	--ink-faint: #9c9a8e;
+	--line: #e9e7de;
+	--line-strong: #d8d5c9;
+
+	--red: #d92d20;
+	--red-deep: #b3251a;
+	--red-tint: #fdf1ef;
+	--red-line: #f3c8c3;
+
+	/* Radii: tight and document-like, never pill */
+	--r-sm: 3px;
+	--r: 5px;
+	--r-lg: 10px;
+
+	/* Type: serif display over sans body, mono for evidence */
+	--font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+	--font-body: 'Inter Variable', system-ui, sans-serif;
+	--font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+	/* Layout */
+	--maxw: 1120px;
+	--gutter: 24px;
+
+	/* Motion */
+	--ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ── Reset supplement ──────────────────────────────────────── */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 1.6;
+	color: var(--ink);
+	background: var(--paper);
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-display);
+	font-weight: 560;
+	font-variation-settings: 'opsz' 60, 'SOFT' 0, 'WONK' 0;
+	line-height: 1.08;
+	letter-spacing: -0.01em;
+	margin: 0;
+}
+
+/* Small serif headings need a lower optical size and a touch more
+   weight, or Fraunces' display cut turns spindly below ~24px */
+h3 {
+	font-weight: 600;
+	font-variation-settings: 'opsz' 32, 'SOFT' 0, 'WONK' 0;
+	letter-spacing: -0.005em;
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+img,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+::selection {
+	background: var(--red);
+	color: #fff;
+}
+
+/* ── Shared primitives ─────────────────────────────────────── */
+.wrap {
+	width: 100%;
+	max-width: var(--maxw);
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+}
+
+/* Mono section label, numbered like report clauses: the signature */
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--red);
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.eyebrow--muted {
+	color: var(--ink-faint);
+}
+
+/* Red-pen annotation: underline drawn beneath a key phrase */
+.redline {
+	position: relative;
+	white-space: nowrap;
+}
+
+.redline > svg {
+	position: absolute;
+	left: -0.06em;
+	right: -0.06em;
+	bottom: -0.04em;
+	width: calc(100% + 0.12em);
+	height: 0.2em;
+	overflow: visible;
+	pointer-events: none;
+}
+
+.redline > svg path {
+	fill: none;
+	stroke: var(--red);
+	stroke-width: 6;
+	stroke-linecap: round;
+	opacity: 0.9;
+}
+
+/* Rubber stamp: rotated, double-bordered, mono uppercase */
+.stamp {
+	display: inline-block;
+	font-family: var(--font-mono);
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--red);
+	border: 1.5px solid currentColor;
+	border-radius: 3px;
+	padding: 5px 10px;
+	box-shadow: inset 0 0 0 3px var(--card), inset 0 0 0 4.5px currentColor;
+	background: var(--card);
+	transform: rotate(-6deg);
+}
+
+/* Buttons */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center; /* keeps the label centered when the button goes full-width */
+	gap: 8px;
+	font-family: var(--font-body);
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1;
+	padding: 12px 18px;
+	border-radius: var(--r-sm);
+	border: 1px solid transparent;
+	cursor: pointer;
+	transition: background 0.16s var(--ease), border-color 0.16s var(--ease),
+		transform 0.16s var(--ease), color 0.16s var(--ease);
+}
+
+.btn:active {
+	transform: translateY(1px);
+}
+
+.btn--primary {
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.btn--primary:hover {
+	background: var(--red);
+	color: #fff;
+}
+
+.btn--ghost {
+	background: transparent;
+	color: var(--ink);
+	border-color: var(--line-strong);
+}
+
+.btn--ghost:hover {
+	border-color: var(--ink);
+	background: var(--card);
+}
+
+/* Scroll-reveal: elements start hidden, .is-in fades them up.
+   Guarded on html.js so content stays visible if JS never runs. */
+.reveal {
+	transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+
+/* :where() keeps the JS gate at zero specificity so .reveal.is-in always wins */
+:where(html.js) .reveal {
+	opacity: 0;
+	transform: translateY(16px);
+}
+
+.reveal.is-in {
+	opacity: 1;
+	transform: none;
+}
+
+/* Keyboard focus: a visible red ring, only for keyboard users */
+:focus-visible {
+	outline: 2px solid var(--red);
+	outline-offset: 3px;
+	border-radius: var(--r-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
+	}
+	html {
+		scroll-behavior: auto;
+	}
+}
