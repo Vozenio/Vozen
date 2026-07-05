@@ -1,0 +1,241 @@
+---
+const chain = [
+	{
+		n: '01',
+		label: 'Source',
+		body: 'req.query.name — unvalidated request input',
+		loc: 'src/api/users.ts:41',
+	},
+	{
+		n: '02',
+		label: 'Trace',
+		body: '7-hop data flow into db.raw(), no sanitizer on the path',
+		loc: 'users.ts → repo.ts → db.ts',
+	},
+	{
+		n: '03',
+		label: 'Reproduce',
+		body: 'sandboxed exploit returned 42 rows from an isolated replica',
+		loc: 'ephemeral env · destroyed after run',
+	},
+	{
+		n: '04',
+		label: 'Patch',
+		body: 'parameterized query authored, full test suite green',
+		loc: 'PR #418 · awaiting your review',
+	},
+];
+---
+
+<section class="ev" id="evidence">
+	<div class="wrap ev__grid">
+		<div class="ev__copy">
+			<span class="eyebrow reveal">§ 02 · Evidence</span>
+			<h2 class="ev__title reveal">Verified means reproduced, not pattern-matched.</h2>
+			<p class="ev__lede reveal">
+				A scanner flags everything that looks wrong and leaves the triage to you.
+				Vozen treats every candidate as unproven until an agent can demonstrate
+				it end to end: trace the flow, reproduce the exploit in a sandbox, attach
+				the proof.
+			</p>
+			<p class="ev__rule reveal">
+				If a finding can’t be demonstrated, it never reaches your ledger.
+				That is the entire policy.
+			</p>
+		</div>
+
+		<div class="ev__panel reveal" aria-hidden="true">
+			<div class="chain">
+				<header class="chain__head">
+					<span class="chain__ref">Evidence trail — VZ-2026-042</span>
+					<span class="chain__badge">Reproduced ✓</span>
+				</header>
+				<ol class="chain__list">
+					{
+						chain.map((s) => (
+							<li class="chain__row">
+								<span class="chain__node"></span>
+								<div class="chain__cell">
+									<span class="chain__label">
+										<span class="chain__n">{s.n}</span>
+										{s.label}
+									</span>
+									<span class="chain__body">{s.body}</span>
+									<span class="chain__loc">{s.loc}</span>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.ev {
+		padding: 96px 0;
+		border-top: 1px solid var(--line);
+		background: var(--paper-2);
+	}
+
+	.ev__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 64px;
+		align-items: center;
+	}
+
+	.ev__copy {
+		min-width: 0;
+	}
+
+	.ev__title {
+		font-size: clamp(26px, 3.4vw, 36px);
+		margin: 16px 0 0;
+		max-width: 24rem;
+	}
+
+	.ev__lede {
+		margin-top: 18px;
+		font-size: 16.5px;
+		color: var(--ink-soft);
+		max-width: 28rem;
+	}
+
+	/* The policy, stated like a clause — hand it the red margin rule */
+	.ev__rule {
+		margin-top: 22px;
+		padding-left: 16px;
+		border-left: 2px solid var(--red);
+		font-size: 15.5px;
+		font-weight: 500;
+		color: var(--ink);
+		max-width: 26rem;
+	}
+
+	/* Chain of custody: one finding, walked from source to patch */
+	.chain {
+		background: var(--card);
+		border: 1px solid var(--line-strong);
+		border-radius: var(--r);
+		box-shadow: 0 18px 44px -30px rgba(28, 27, 22, 0.35);
+		overflow: hidden;
+	}
+
+	.chain__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		padding: 14px 20px;
+		border-bottom: 1px solid var(--line);
+	}
+
+	.chain__ref {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink);
+	}
+
+	.chain__badge {
+		flex-shrink: 0;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--red);
+		background: var(--red-tint);
+		border: 1px solid var(--red-line);
+		border-radius: var(--r-sm);
+		padding: 4px 8px;
+	}
+
+	.chain__list {
+		list-style: none;
+		margin: 0;
+		padding: 8px 20px 16px;
+		position: relative;
+	}
+
+	/* The red thread that ties the trail together */
+	.chain__list::before {
+		content: '';
+		position: absolute;
+		top: 26px;
+		bottom: 30px;
+		left: 24px;
+		width: 1.5px;
+		background: var(--red-line);
+	}
+
+	.chain__row {
+		position: relative;
+		display: flex;
+		gap: 16px;
+		padding: 12px 0;
+	}
+
+	.chain__row + .chain__row {
+		border-top: 1px solid var(--line);
+	}
+
+	.chain__node {
+		position: relative;
+		z-index: 1;
+		flex-shrink: 0;
+		width: 9px;
+		height: 9px;
+		margin-top: 6px;
+		border-radius: 50%;
+		background: var(--red);
+		box-shadow: 0 0 0 3px var(--card);
+	}
+
+	.chain__cell {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	.chain__label {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--ink);
+	}
+
+	.chain__n {
+		color: var(--red);
+		margin-right: 6px;
+	}
+
+	.chain__body {
+		font-size: 14px;
+		color: var(--ink-soft);
+	}
+
+	.chain__loc {
+		font-family: var(--font-mono);
+		font-size: 11.5px;
+		color: var(--ink-faint);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	@media (max-width: 860px) {
+		.ev { padding: 68px 0; }
+		.ev__grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 40px;
+		}
+	}
+</style>

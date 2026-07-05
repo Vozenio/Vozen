@@ -1,0 +1,153 @@
+---
+const stats = [
+	{ value: '38,412', label: 'Verified findings shipped' },
+	{ value: '0.4%', label: 'False-positive rate, customer-reported' },
+	{ value: '11', label: 'CVEs credited to Vozen agents' },
+	{ value: '26 min', label: 'Median time to first critical' },
+];
+
+const logos = ['Meridian Pay', 'Kestrel', 'Datavine', 'Northbeam', 'Arclight', 'Heliotrope'];
+---
+
+<section class="rec" id="track">
+	<div class="wrap">
+		<div class="rec__head reveal">
+			<span class="eyebrow">§ 04 · Track record</span>
+			<h2 class="rec__title">Adopted where noise is expensive.</h2>
+		</div>
+
+		<dl class="stats reveal">
+			{
+				stats.map((s) => (
+					<div class="stat">
+						<dd class="stat__value">{s.value}</dd>
+						<dt class="stat__label">{s.label}</dt>
+					</div>
+				))
+			}
+		</dl>
+
+		<figure class="quote reveal">
+			<blockquote class="quote__text">
+				Vozen’s report was the first automated audit our external auditors accepted
+				as evidence. Every finding arrives with its proof, so the argument about
+				whether the tool is right simply stopped happening.
+			</blockquote>
+			<figcaption class="quote__by">
+				M. Okafor · Chief Information Security Officer, Meridian Pay
+			</figcaption>
+		</figure>
+
+		<ul class="logos reveal" aria-label="Customers">
+			{logos.map((l) => <li>{l}</li>)}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.rec {
+		padding: 96px 0;
+		border-top: 1px solid var(--line);
+	}
+
+	.rec__head {
+		max-width: 40rem;
+	}
+
+	.rec__title {
+		font-size: clamp(26px, 3.4vw, 36px);
+		margin: 16px 0 0;
+	}
+
+	/* Ledger totals: serif figures over mono captions */
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 16px;
+		margin: 44px 0 0;
+	}
+
+	.stat {
+		padding: 22px 22px 20px;
+		border: 1px solid var(--line);
+		border-radius: var(--r);
+		background: var(--card);
+	}
+
+	.stat__value {
+		margin: 0;
+		font-family: var(--font-display);
+		font-weight: 560;
+		font-variation-settings: 'opsz' 60, 'SOFT' 0, 'WONK' 0;
+		font-size: clamp(30px, 3vw, 40px);
+		line-height: 1;
+		color: var(--ink);
+	}
+
+	.stat__label {
+		margin-top: 10px;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+		line-height: 1.5;
+	}
+
+	/* A pull quote set like a letter excerpt, red pen in the margin */
+	.quote {
+		margin: 56px auto 0;
+		max-width: 44rem;
+		padding-left: 22px;
+		border-left: 2px solid var(--red);
+	}
+
+	.quote__text {
+		margin: 0;
+		font-family: var(--font-display);
+		font-weight: 480;
+		font-variation-settings: 'opsz' 24, 'SOFT' 0, 'WONK' 0;
+		font-size: clamp(19px, 2.1vw, 23px);
+		line-height: 1.45;
+		color: var(--ink);
+	}
+
+	.quote__by {
+		margin-top: 16px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--ink-faint);
+	}
+
+	.logos {
+		list-style: none;
+		margin: 52px 0 0;
+		padding: 26px 0 0;
+		border-top: 1px solid var(--line);
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px 40px;
+		align-items: baseline;
+	}
+
+	.logos li {
+		font-family: var(--font-display);
+		font-weight: 600;
+		font-variation-settings: 'opsz' 32, 'SOFT' 0, 'WONK' 0;
+		font-size: 17px;
+		letter-spacing: 0.01em;
+		color: var(--ink-faint);
+	}
+
+	@media (max-width: 860px) {
+		.rec { padding: 68px 0; }
+		.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+
+	@media (max-width: 480px) {
+		.stats { grid-template-columns: minmax(0, 1fr); }
+		.logos { gap: 12px 28px; }
+	}
+</style>

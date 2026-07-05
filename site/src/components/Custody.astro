@@ -1,0 +1,157 @@
+---
+const clauses = [
+	{
+		n: '5.1',
+		title: 'Read-only, revocable',
+		body: 'OAuth scopes are limited to read. No write access to your repos, ever. Revoke with one click and every token dies with it.',
+	},
+	{
+		n: '5.2',
+		title: 'Zero retention',
+		body: 'Code is analyzed in ephemeral sandboxes that are destroyed after each run. Nothing is copied out; findings keep only the excerpted evidence.',
+	},
+	{
+		n: '5.3',
+		title: 'Never trains models',
+		body: 'Your code never enters a training corpus — ours or anyone else’s. It’s in the contract, not just the FAQ.',
+	},
+	{
+		n: '5.4',
+		title: 'Audited ourselves',
+		body: 'SOC 2 Type II, quarterly third-party pentests. The reports are available under NDA — ask and you’ll have them today.',
+	},
+	{
+		n: '5.5',
+		title: 'Residency & keys',
+		body: 'Pin analysis to EU or US regions. Enterprise plans run against your KMS, so evidence at rest is under your keys.',
+	},
+	{
+		n: '5.6',
+		title: 'Single-tenant option',
+		body: 'Regulated teams can run the entire audit plane on dedicated, isolated infrastructure.',
+	},
+];
+---
+
+<section class="cus" id="custody">
+	<div class="wrap">
+		<div class="cus__head reveal">
+			<span class="eyebrow">§ 05 · Custody</span>
+			<h2 class="cus__title">How we treat the code you show us.</h2>
+			<p class="cus__sub">
+				An auditor has to clear a higher bar than the audited. These terms are
+				contractual, not aspirational.
+			</p>
+		</div>
+
+		<dl class="clauses">
+			{
+				clauses.map((c, i) => (
+					<div class="clause reveal" style={`transition-delay:${i * 50}ms`}>
+						<dt class="clause__title">
+							<span class="clause__n">{c.n}</span>
+							{c.title}
+						</dt>
+						<dd class="clause__body">{c.body}</dd>
+					</div>
+				))
+			}
+		</dl>
+
+		<p class="cus__foot reveal">
+			<a href="#" class="cus__link">
+				Read the security whitepaper
+				<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+					<path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+				</svg>
+			</a>
+		</p>
+	</div>
+</section>
+
+<style>
+	.cus {
+		padding: 96px 0;
+		border-top: 1px solid var(--line);
+		background: var(--paper-2);
+	}
+
+	.cus__head {
+		max-width: 40rem;
+	}
+
+	.cus__title {
+		font-size: clamp(26px, 3.4vw, 36px);
+		margin: 16px 0 0;
+	}
+
+	.cus__sub {
+		margin-top: 14px;
+		font-size: 16.5px;
+		color: var(--ink-soft);
+	}
+
+	/* Contract clauses: numbered, ruled, set in columns like the document */
+	.clauses {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0 40px;
+		margin: 44px 0 0;
+	}
+
+	.clause {
+		padding: 20px 0 22px;
+		border-top: 1px solid var(--line-strong);
+	}
+
+	.clause__title {
+		font-family: var(--font-body);
+		font-size: 15.5px;
+		font-weight: 600;
+		color: var(--ink);
+	}
+
+	.clause__n {
+		font-family: var(--font-mono);
+		font-size: 12.5px;
+		font-weight: 600;
+		color: var(--red);
+		margin-right: 8px;
+	}
+
+	.clause__body {
+		margin: 8px 0 0;
+		font-size: 14px;
+		line-height: 1.6;
+		color: var(--ink-soft);
+	}
+
+	.cus__foot {
+		margin-top: 36px;
+	}
+
+	.cus__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 14.5px;
+		font-weight: 500;
+		color: var(--ink);
+		border-bottom: 1.5px solid var(--red);
+		padding-bottom: 2px;
+		transition: color 0.16s var(--ease);
+	}
+
+	.cus__link:hover {
+		color: var(--red-deep);
+	}
+
+	@media (max-width: 860px) {
+		.cus { padding: 68px 0; }
+		.clauses { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+	}
+
+	@media (max-width: 560px) {
+		.clauses { grid-template-columns: minmax(0, 1fr); }
+	}
+</style>
