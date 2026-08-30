@@ -3,7 +3,7 @@
 set -eu
 
 repo="Vozenio/Vozen"
-version="v0.1.0"
+version="v0.1.1"
 force=0
 
 usage() {
@@ -84,11 +84,6 @@ package_dir="$work_dir/vozen-${version}-macos-arm64"
   echo "Archive is missing vozen-daemon; nothing was installed." >&2
   exit 1
 }
-[ -f "$package_dir/web-vozen/index.html" ] || {
-  echo "Archive is missing the WebUI; nothing was installed." >&2
-  exit 1
-}
-
 mkdir -p "$share_root" "$bin_root"
 if [ -e "$install_dir" ]; then
   rm -rf "$install_dir"
@@ -96,7 +91,7 @@ fi
 mv "$package_dir" "$install_dir"
 cat > "$bin_root/vozen" <<EOF
 #!/bin/sh
-exec "$install_dir/bin/vozen-server" --web-root "$install_dir/web-vozen" "\$@"
+exec "$install_dir/bin/vozen-server" "\$@"
 EOF
 chmod +x "$bin_root/vozen"
 
