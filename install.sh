@@ -94,7 +94,11 @@ if [ -e "$install_dir" ]; then
   rm -rf "$install_dir"
 fi
 mv "$package_dir" "$install_dir"
-ln -sfn "$install_dir/bin/vozen-server" "$bin_root/vozen"
+cat > "$bin_root/vozen" <<EOF
+#!/bin/sh
+exec "$install_dir/bin/vozen-server" --web-root "$install_dir/web-vozen" "\$@"
+EOF
+chmod +x "$bin_root/vozen"
 
 echo "Installed Vozen ${version}."
 echo "Run: $bin_root/vozen"
